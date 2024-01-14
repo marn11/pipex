@@ -3,7 +3,7 @@
 
 Resources I will be using (some of them are deleted from the web so some links will redirect you to waybackmachine):
 
-[Pipex: Reproducing the Pipe Operator “|” in C]((https://web.archive.org/web/20220508111904/https://www.codequoi.com/en/pipex-reproducing-the-pipe-operator-in-c/))
+[Pipex: Reproducing the Pipe Operator “|” in C](https://web.archive.org/web/20220508111904/https://www.codequoi.com/en/pipex-reproducing-the-pipe-operator-in-c/)
 
 [Pipe: an Inter-Process Communication Method](https://web.archive.org/web/20221216131509/https://www.codequoi.com/en/pipe-an-inter-process-communication-method/)
 
