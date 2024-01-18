@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 23:46:32 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/01/16 18:00:59 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:04:33 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char *get_cmd_path(const char *cmd, char **envp)
 {
-	char	*envppath;
+	char	*fullpath;
 	char	**paths;
 	char	*cmdpath;
 	char	*tmp;
@@ -26,18 +26,18 @@ char *get_cmd_path(const char *cmd, char **envp)
 	i = 0;
 	while(envp[i] && envp[i][0] != '\0')
 	{
-		envppath = ft_strnstr(envp[i], "PATH=", 5);
-		if (envppath)
+		fullpath = ft_strnstr(envp[i], "PATH=", 5);
+		if (fullpath)
 		{
-			envppath = ft_substr(envppath, 5, ft_strlen(envppath));
+			fullpath = ft_substr(fullpath, 5, ft_strlen(fullpath));
 			break ;
 		}
 		i++;
 	}
-	paths = ft_split(envppath, ':');
+	paths = ft_split(fullpath, ':');
 	if (!paths)
 	{
-		free(envppath);
+		free(fullpath);
 		return (NULL);
 	}
 	j = 0;
@@ -45,7 +45,7 @@ char *get_cmd_path(const char *cmd, char **envp)
 	{
 		tmp = paths[j];
 		paths[j] = ft_strjoin(paths[j], "/");
-		free(tmp);
+		free(tmp); // free the memory allocated to paths + j before we appended the /
 		j++;
 	}
 	k = 0;
@@ -57,7 +57,7 @@ char *get_cmd_path(const char *cmd, char **envp)
 		free (cmdpath);
 		k++;
 	}
-	free(envppath);
+	//free(fullpath);
 	l = 0;
 	while (paths[l])
 	{
@@ -82,7 +82,7 @@ int main(int argc, char *argv[], char **envp)
     perror("Error finding command path");
     return -1;
 }
-	execve(cmd_path,opt, envp);
-	printf("yes");
+	execve(cmd_path,opt, envp);// process finishes here so printf won't execute
+	printf("Victory");
 	free(cmd_path);
 }
