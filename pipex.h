@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 01:15:33 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/01/16 17:21:12 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:02:18 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PIPEX_H
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/wait.h>
 
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
