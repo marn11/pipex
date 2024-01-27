@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 23:46:32 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/01/27 01:12:28 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/01/27 04:49:30 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,3 +121,4 @@ int main(int argc, char *argv[], char **envp)
 	printf("Victory");
 	free(cmd_path);
 }
+//test
