@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 23:46:32 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/01/26 00:22:56 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/01/27 01:12:28 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void execcomm(const char *cmd_path, char **cmd_args, char **envp)
 	else if (pid == 0)
 	{
 	
-		dup2(fd_io[0], STDIN_FILENO);
 		close(fd_io[0]);
 		dup2(fd_io[1], STDOUT_FILENO);
 		close(fd_io[1]);
@@ -94,27 +93,31 @@ void execcomm(const char *cmd_path, char **cmd_args, char **envp)
 			i++;
 		}
 		printf("\n");
-		
 		execve(cmd_path, cmd_args, envp);
+		perror("Error in execution");
+        exit(EXIT_FAILURE);
 	}
 	else
 	{
-		close (fd_io[0]);
 		close (fd_io[1]);
 		waitpid(pid, NULL, 0); // change this later to null as i dont need the exit status
-
 	}
 }
 int main(int argc, char *argv[], char **envp)
 {
-    (void)argc;
-    (void)argv;
-
-
-    char *cmd_path = "ls";
-    char *cmd_args[] = {"ls", "-l", NULL};
-	char *cmd = get_cmd_path(cmd_path, envp);
-    execcomm(cmd, cmd_args, envp);// wslt hna and this is not working 
-
-    return 0;
+	char *cmd_path;
+	char *opt[3] = {"ls", "-la", NULL};
+	char *cmd = "ls";
+	(void)argc;
+	(void)argv;
+	cmd_path = get_cmd_path(cmd,envp);
+	
+	if (!cmd_path)
+{
+    perror("Error finding command path");
+    return -1;
+}
+	execve(cmd_path,opt, envp);// process finishes here so printf won't execute
+	printf("Victory");
+	free(cmd_path);
 }

@@ -6,11 +6,11 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 02:49:26 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/01/16 17:19:02 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/01/27 01:14:11 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "utilities.h"
 
 static size_t	countwords(const char *s, char c)
 {
