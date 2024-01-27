@@ -6,24 +6,19 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 23:46:32 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/01/27 04:49:30 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/01/27 20:47:47 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char *get_cmd_path(const char *cmd, char **envp)
+char	*find_envp(char **envp)
 {
-	char	*fullpath;
-	char	**paths;
-	char	*cmdpath;
-	char	*tmp;
 	int		i;
-	int		j;
-	int		k;
-	int		l;
+	char	*fullpath;
 	
 	i = 0;
+	fullpath = NULL;
 	while(envp[i] && envp[i][0] != '\0')
 	{
 		fullpath = ft_strnstr(envp[i], "PATH=", 5);
@@ -34,91 +29,46 @@ char *get_cmd_path(const char *cmd, char **envp)
 		}
 		i++;
 	}
-	paths = ft_split(fullpath, ':');
-	if (!paths)
-	{
-		free(fullpath);
-		return (NULL);
-	}
-	j = 0;
-	while (paths[j])
-	{
-		tmp = paths[j];
-		paths[j] = ft_strjoin(paths[j], "/");
-		free(tmp); // free the memory allocated to paths + j before we appended the /
-		j++;
-	}
-	k = 0;
-	while(paths[k])
-	{
-		cmdpath = ft_strjoin(paths[k], cmd);
-		if (access(cmdpath, X_OK) == 0)
-			return (cmdpath);
-		free (cmdpath);
-		k++;
-	}
-	//free(fullpath);
-	l = 0;
-	while (paths[l])
-	{
-		free(paths[l]);
-		l++;
-	}
-	free(paths);
-	return (NULL);
+		return (fullpath);
 }
-void execcomm(const char *cmd_path, char **cmd_args, char **envp)
+
+void	parsing(t_list *data, char **argv, char **envp)
 {
-	pid_t	pid;
-	int		fd_io[2];
-
-	pipe(fd_io);
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("Failed forking");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{
+	char	*cmdtmp;
+	char	*envpath;
 	
-		close(fd_io[0]);
-		dup2(fd_io[1], STDOUT_FILENO);
-		close(fd_io[1]);
-
-		int i = 0;
-		while(cmd_args[i] != NULL)
-		{
-			printf("%s ", cmd_args[i]);
-			i++;
-		}
-		printf("\n");
-		execve(cmd_path, cmd_args, envp);
-		perror("Error in execution");
-        exit(EXIT_FAILURE);
-	}
-	else
+	data->input = ft_strdup(argv[1]);
+	data->output = ft_strdup(argv[4]);
+	cmdtmp = ft_strdup(argv[2]);
+	data->cmd1 = ft_split(cmdtmp, ' ');
+	free(cmdtmp);
+	cmdtmp = ft_strdup(argv[3]);
+	data->cmd2 = ft_split(cmdtmp, ' ');
+	free(cmdtmp);
+	envpath = find_envp(envp);
+	if (envpath == NULL)
 	{
-		close (fd_io[1]);
-		waitpid(pid, NULL, 0); // change this later to null as i dont need the exit status
+		perror("Environment error");
+		exit(0);
 	}
+	data->path = ft_split(envpath, ':');
+	free(envpath);
 }
+
 int main(int argc, char *argv[], char **envp)
 {
-	char *cmd_path;
-	char *opt[3] = {"ls", "-la", NULL};
-	char *cmd = "ls";
-	(void)argc;
-	(void)argv;
-	cmd_path = get_cmd_path(cmd,envp);
+	t_list	data;
+
+	if (argc == 5)
+	{
+		parsing(&data, argv, envp);
+		if ((data.fd1 = open(data.input, O_RDWR)) < 0)
+			return(perror("Input file doesn't exist"));
+		if ((data.fd2 = open(data.output, O_RDWR | O_CREAT | O_TRUNC)) < 0)
+				return(perror("Output file doesn't exist"));
 	
-	if (!cmd_path)
-{
-    perror("Error finding command path");
-    return -1;
+	}
+	else
+		perror("wa333333333");
 }
-	execve(cmd_path,opt, envp);// process finishes here so printf won't execute
-	printf("Victory");
-	free(cmd_path);
-}
-//test
+

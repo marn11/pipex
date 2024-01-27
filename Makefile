@@ -15,11 +15,11 @@ OBJS	= $(SRCS:.c=.o)
 all:	$(NAME)
 
 %.o: %.c pipex.h 
-	cc ${CFLAGS} -c $< -o $@
+	$(CC) ${CFLAGS} -c $< -o $@
 
 $(NAME):	$(OBJS)
 			make -C utilities
-			cc $(CFLAGS) -o $(NAME) $(OBJS) utilities/utils.a
+			$(CC) $(CFLAGS) -o $(NAME) $(OBJS) utilities/utils.a
 
 clean:
 			$(RM) $(OBJS)

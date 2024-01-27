@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 01:15:33 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/01/27 01:04:06 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/01/27 20:18:50 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,26 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 # include <stdio.h>
+# include <stddef.h>
+
+typedef struct s_data
+{
+	int		fd[2];
+	int		fd1;
+	int		fd2;
+	char	*input;
+	char	*output;
+	char	**cmd1;
+	char	**cmd2;
+	char	**path;
+	char	*cmd1path;
+	char	*cmd2path;
+}	t_list;
+char	*find_envp(char **envp);
+void	parsing(t_list *data, char **argv, char **envp);
+
 
 
 #endif
