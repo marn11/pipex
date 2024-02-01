@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 18:16:08 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/01/27 01:00:32 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:17:22 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
-
 
 size_t	ft_strlen_nl(const char *s);
 char	*get_next_line(int fd);

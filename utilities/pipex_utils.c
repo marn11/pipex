@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 02:39:27 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/01/27 02:40:09 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:18:35 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	slen;
 
 	if (!s)
-		return (NULL); 
+		return (NULL);
 	slen = ft_strlen(s);
 	if (s == NULL || start >= slen)
 		return (ft_strdup(""));
@@ -56,6 +56,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ft_strlcpy(c, &s[start], len + 1);
 	return (c);
 }
+
 char	*ft_strjoin(const char *s1, const char *s2)
 {
 	size_t	i;
@@ -83,7 +84,8 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	c[i] = '\0';
 	return (c);
 }
-size_t ft_strlen(const char *s)
+
+size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 

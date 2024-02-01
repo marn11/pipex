@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 23:46:32 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/01 17:11:32 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:15:18 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	firstcmd(t_list *data, char **envp)
 		exit(EXIT_FAILURE);
 	}
 }
+
 void	secondcmd(t_list *data, char **envp)
 {
 	data->cmd2path = get_cmd_path(data, *data->cmd2);
@@ -47,14 +48,13 @@ void	secondcmd(t_list *data, char **envp)
 		perror("Error in execution");
 		exit(EXIT_FAILURE);
 	}
-	
 }
 
 void	parsing(t_list *data, char **argv, char **envp)
 {
 	char	*cmdtmp;
 	char	*envpath;
-	
+
 	data->input = ft_strdup(argv[1]);
 	data->output = ft_strdup(argv[4]);
 	cmdtmp = ft_strdup(argv[2]);
@@ -72,6 +72,7 @@ void	parsing(t_list *data, char **argv, char **envp)
 	data->path = ft_split(envpath, ':');
 	free(envpath);
 }
+
 void	execprg(t_list *data, char **envp)
 {
 	int	pid;
@@ -91,23 +92,26 @@ void	execprg(t_list *data, char **envp)
 		firstcmd(data, envp);
 	else
 	{
-		if (waitpid(pid, NULL, 0) == pid) //wait for termination of the child
+		if (waitpid(pid, NULL, 0) == pid)
 			secondcmd(data, envp);
 	}
 }
-int main(int argc, char *argv[], char **envp)
+
+int	main(int argc, char *argv[], char **envp)
 {
 	t_list	data;
 
 	if (argc == 5)
 	{
 		parsing(&data, argv, envp);
-		if ((data.fd1 = open(data.input, O_RDWR)) < 0)
+		data.fd1 = open(data.input, O_RDWR);
+		if (data.fd1 < 0)
 		{
 			perror("Input file doesn't exist");
 			exit(EXIT_FAILURE);
 		}
-		if ((data.fd2 = open(data.output, O_RDWR | O_CREAT | O_TRUNC, 0644)) < 0)
+		data.fd2 = open(data.output, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (data.fd2 < 0)
 		{
 			perror("Output file doesn't exist");
 			exit(EXIT_FAILURE);
@@ -116,6 +120,5 @@ int main(int argc, char *argv[], char **envp)
 	}
 	else
 		perror("wa333333333");
-		exit(EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
-
