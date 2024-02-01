@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 23:46:32 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/01/31 15:53:00 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:11:32 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int main(int argc, char *argv[], char **envp)
 			perror("Output file doesn't exist");
 			exit(EXIT_FAILURE);
 		}
+		execprg(&data, envp);
 	}
 	else
 		perror("wa333333333");
