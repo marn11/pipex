@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipexutils.c                                       :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 15:10:10 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/05 13:56:52 by mbenchel         ###   ########.fr       */
+/*   Created: 2024/02/02 18:02:38 by mbenchel          #+#    #+#             */
+/*   Updated: 2024/02/05 16:20:32 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 char	*find_envp(char **envp)
 {
@@ -48,4 +48,37 @@ char	*get_cmd_path(t_list *data, char *cmd)
 	if (!access(cmd, X_OK))
 		return (cmd);
 	return (NULL);
+}
+void midcmds(t_list *data, char **envp)
+{
+	int	i;
+	int	pid;
+	
+	i = 0;
+	while (i < data->nbcomm - 1)
+	{
+		pipe(data->fds2);
+		pid = fork();
+		if (pid == 0)
+		{
+			dup2(data->fds[0], 0);
+			close(data->fds[0]);
+			close(data->fds[1]);
+			dup2(data->fds2[1], 1);
+			close(data->fds2[0]);
+			close(data->fds2[1]);
+			data->cmdpath = get_cmd_path(data, *data->commands[i]);
+			if (data->cmdpath == NULL)
+			{
+				perror("Where is the command?");
+				exit(EXIT_FAILURE);
+			}
+			if (execve(data->cmdpath, data->commands[i], envp) == -1)
+			{
+				perror("Error in execution");
+				exit(EXIT_FAILURE);
+			}
+		}
+		i++;
+	}
 }

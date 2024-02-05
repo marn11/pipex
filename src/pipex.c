@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 23:46:32 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/01 18:15:18 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:06:39 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	firstcmd(t_list *data, char **envp)
 	close(data->fd1);
 	dup2(data->fd[1], 1);
 	close(data->fd[0]);
+	close(data->fd[1]);
 	if (execve(data->cmd1path, data->cmd1, envp) == -1)
 	{
 		perror("Error in execution");
@@ -43,6 +44,7 @@ void	secondcmd(t_list *data, char **envp)
 	close(data->fd2);
 	dup2(data->fd[0], 0);
 	close(data->fd[1]);
+	close(data->fd[0]);
 	if (execve(data->cmd2path, data->cmd2, envp) == -1)
 	{
 		perror("Error in execution");
@@ -119,6 +121,6 @@ int	main(int argc, char *argv[], char **envp)
 		execprg(&data, envp);
 	}
 	else
-		perror("wa333333333");
+		perror("ghi glbha ofppt");
 	exit(EXIT_FAILURE);
 }
