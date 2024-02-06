@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 18:02:38 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/05 16:20:32 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:27:37 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void midcmds(t_list *data, char **envp)
 {
 	int	i;
 	int	pid;
+	int prev_fd = data->fd1;
 	
 	i = 0;
 	while (i < data->nbcomm - 1)
@@ -61,11 +62,11 @@ void midcmds(t_list *data, char **envp)
 		pid = fork();
 		if (pid == 0)
 		{
+			close(data->fds[1]);
 			dup2(data->fds[0], 0);
 			close(data->fds[0]);
-			close(data->fds[1]);
-			dup2(data->fds2[1], 1);
 			close(data->fds2[0]);
+			dup2(data->fds2[1], 1);
 			close(data->fds2[1]);
 			data->cmdpath = get_cmd_path(data, *data->commands[i]);
 			if (data->cmdpath == NULL)
@@ -79,6 +80,23 @@ void midcmds(t_list *data, char **envp)
 				exit(EXIT_FAILURE);
 			}
 		}
+		else if (pid > 0)
+		{
+			close(data->fds[0]);
+			close(data->fds[1]);
+			data->fds[0] = data->fds2[0];
+			data->fds[1] = data->fds2[1];
+		}
+		else 
+		{
+			perror("No child :/");
+			exit(EXIT_FAILURE);
+		}
 		i++;
 	}
+	close (data->fds2[0]);
+	close (data->fds2[1]);
+	while (wait(NULL) > 0)
+		;
+		data->fd1 = prev_fd;
 }

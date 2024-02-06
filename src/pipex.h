@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/16 01:15:33 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/01 18:15:36 by mbenchel         ###   ########.fr       */
+/*   Created: 2024/02/06 17:33:00 by mbenchel          #+#    #+#             */
+/*   Updated: 2024/02/06 17:33:02 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stddef.h>
+
 
 typedef struct s_data
 {
@@ -41,4 +42,5 @@ void	firstcmd(t_list *data, char **envp);
 char	*get_cmd_path(t_list *data, char *cmd);
 void	firstcmd(t_list *data, char **envp);
 void	secondcmd(t_list *data, char **envp);
+
 #endif

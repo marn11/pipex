@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 17:02:20 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/05 19:00:58 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:17:57 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ void	execprg(t_list *data, char **envp)
 		// close(data->fd[1]);
 		exit(EXIT_SUCCESS);
 	}
-	// close (data->fd[1]);
-	// close (data->fd[0]);
 	midcmds(data, envp);
 	pid2 = fork();
 	if (pid2 == -1)
