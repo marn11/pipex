@@ -6,13 +6,13 @@ CFLAGS	= -Wall -Wextra -Werror
 
 RM		= rm -rf
 
-SRCS	= ft_split.c get_next_line.c pipex_utils.c utils.c
+SRCS	= ft_split.c pipex_utils.c utils.c
 
 OBJS	= $(SRCS:.c=.o)
 
 all:	$(NAME)
 
-%.o : %.c utilities.h get_next_line.h
+%.o : %.c utilities.h
 	cc ${CFLAGS} -c $< -o $@
 
 $(NAME):	$(OBJS)

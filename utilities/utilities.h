@@ -6,19 +6,17 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 00:40:30 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/01/27 01:15:58 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:40:27 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILITIES_H
 # define UTILITIES_H
 
-# include "get_next_line.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
 
-char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);

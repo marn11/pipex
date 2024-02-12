@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:20:37 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/04 17:40:04 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:29:54 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strdup(const char *s)
 	char	*dup;
 
 	j = 0;
+	if (!s)
+		return (NULL);
 	l = ft_strlen(s);
 	dup = malloc(sizeof(char) * (l + 1));
 	if (dup == NULL)

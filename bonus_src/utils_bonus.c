@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 18:02:38 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/06 17:27:37 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:36:04 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,54 +49,52 @@ char	*get_cmd_path(t_list *data, char *cmd)
 		return (cmd);
 	return (NULL);
 }
-void midcmds(t_list *data, char **envp)
+void	here_doc_data(int argc, char **argv, char **envp, t_list *data)
 {
-	int	i;
-	int	pid;
-	int prev_fd = data->fd1;
-	
-	i = 0;
-	while (i < data->nbcomm - 1)
+	if (argc < 6)
 	{
-		pipe(data->fds2);
-		pid = fork();
-		if (pid == 0)
-		{
-			close(data->fds[1]);
-			dup2(data->fds[0], 0);
-			close(data->fds[0]);
-			close(data->fds2[0]);
-			dup2(data->fds2[1], 1);
-			close(data->fds2[1]);
-			data->cmdpath = get_cmd_path(data, *data->commands[i]);
-			if (data->cmdpath == NULL)
-			{
-				perror("Where is the command?");
-				exit(EXIT_FAILURE);
-			}
-			if (execve(data->cmdpath, data->commands[i], envp) == -1)
-			{
-				perror("Error in execution");
-				exit(EXIT_FAILURE);
-			}
-		}
-		else if (pid > 0)
-		{
-			close(data->fds[0]);
-			close(data->fds[1]);
-			data->fds[0] = data->fds2[0];
-			data->fds[1] = data->fds2[1];
-		}
-		else 
-		{
-			perror("No child :/");
-			exit(EXIT_FAILURE);
-		}
-		i++;
+		perror("here_doc not used correctly");
+		exit(EXIT_FAILURE);
 	}
-	close (data->fds2[0]);
-	close (data->fds2[1]);
-	while (wait(NULL) > 0)
-		;
-		data->fd1 = prev_fd;
+	if (parsing(data, argv, envp))
+		exit(EXIT_FAILURE);
+}
+
+void	handle_heredoc(t_list *data)
+{
+	int		fd;
+	int		fd1;
+	char 	*line;
+	char	*tmp;
+
+	fd = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		perror("Error in opening the temporary file");
+		exit(EXIT_FAILURE);
+	}
+	fd1 = dup(STDIN_FILENO);
+	line = NULL;
+	tmp = ft_strjoin(data->limiter, "\n");
+	while(1)
+	{
+		write(1, "here_doc > ", 11);
+		line = get_next_line(fd1);
+		printf("line = %s\n", line);
+		if (!line)
+		{
+			close (fd);
+			break;
+		}
+		if (!ft_strncmp(line, tmp, ft_strlen(tmp) + 1))
+		{
+			close (fd);
+			free(line);
+			break;
+		}
+		write(fd, line, ft_strlen(line) - 1);
+		write(fd, "\n", 1);
+		free(line);
+	}
+	close(fd);
 }

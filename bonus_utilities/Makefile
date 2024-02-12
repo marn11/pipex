@@ -6,7 +6,7 @@ CFLAGS	= -Wall -Wextra -Werror
 
 RM		= rm -rf
 
-SRCS	= ft_split2.c get_next_line2.c pipex_utils2.c utils2.c
+SRCS	= ft_split2.c get_next_line2.c pipex_utils2.c utils2.c ft_splitt.c
 
 OBJS	= $(SRCS:.c=.o)
 

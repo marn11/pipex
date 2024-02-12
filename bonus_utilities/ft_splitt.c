@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split2.c                                        :+:      :+:    :+:   */
+/*   ft_splitt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/16 02:49:26 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/08 16:50:24 by mbenchel         ###   ########.fr       */
+/*   Created: 2024/02/08 16:25:58 by mbenchel          #+#    #+#             */
+/*   Updated: 2024/02/12 13:22:48 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utilities2.h"
 
-static size_t	countwords(const char *s, char c)
+static int whitespace(char c)
+{
+	if (c == 32 || c == 9)
+		return (1);
+	return (0);
+}
+
+static size_t	countwords(const char *s)
 {
 	size_t	i;
 	size_t	wc;
@@ -21,11 +28,11 @@ static size_t	countwords(const char *s, char c)
 	wc = 0;
 	while (s[i])
 	{
-		while (s[i] && s[i] == c)
+		while (s[i] && whitespace(s[i]))
 			i++;
 		if (s[i])
 			wc++;
-		while (s[i] && s[i] != c)
+		while (s[i] && !whitespace(s[i]))
 			i++;
 	}
 	return (wc);
@@ -48,7 +55,7 @@ static char	**freemem(char **s)
 	return (NULL);
 }
 
-static	char	*getwords(int *i, const char *s, char c)
+static	char	*getwords(int *i, const char *s)
 {
 	int		wordsz;
 	int		tpos;
@@ -56,10 +63,10 @@ static	char	*getwords(int *i, const char *s, char c)
 	char	*res;
 
 	j = 0;
-	while (s[*i] && s[*i] == c)
+	while (s[*i] && whitespace(s[*i]))
 		(*i)++;
 	tpos = *i;
-	while (s[*i] && s[*i] != c)
+	while (s[*i] && !whitespace(s[*i]))
 		(*i)++;
 	wordsz = *i - tpos;
 	res = (char *)malloc((wordsz + 1) * sizeof(char));
@@ -74,7 +81,7 @@ static	char	*getwords(int *i, const char *s, char c)
 	return (res);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split2(char const *s)
 {
 	char	**res;
 	int		wc;
@@ -85,17 +92,15 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	j = 0;
 	i = 0;
-	wc = countwords(s, c);
+	wc = countwords(s);
 	res = (char **)malloc((wc + 1) * sizeof(char *));
 	if (res == NULL)
 		return (NULL);
 	while (j < wc)
 	{
-		res[j] = getwords(&i, s, c);
+		res[j] = getwords(&i, s);
 		if (res[j] == NULL)
-		{
 			return (freemem(res));
-		}
 		j++;
 	}
 	res[wc] = NULL;

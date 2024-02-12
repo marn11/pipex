@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   utils2_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/16 18:16:08 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/01 18:17:22 by mbenchel         ###   ########.fr       */
+/*   Created: 2024/02/04 19:01:53 by mbenchel          #+#    #+#             */
+/*   Updated: 2024/02/08 18:26:51 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "pipex_bonus.h"
 
-# include "utilities.h"
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
+void	ft_free_envpath(t_list *data)
+{
+	int	i;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
+	i = 0;
+	while(data->path[i])
+		free(data->path[i++]);
+	free(data->path);
+}
+void	ft_free_cmd(t_list *data)
+{
+	int	i;
+	int	j;
 
-size_t	ft_strlen_nl(const char *s);
-char	*get_next_line(int fd);
-char	*ft_strchr(const char *s, int c);
-char	*ft_free(char **block, int len, int null);
-char	*ft_read(char *block, int fd, int *n);
-
-#endif
+	i = 0;
+	while (i < data->nbcomm)
+	{
+		j = 0;
+		while(data->commands[i][j])
+			free(data->commands[i][j++]);
+		free(data->commands[i]);
+		i++;
+	}
+	free(data->commands);
+}

@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:33:38 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/06 17:33:57 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/10 14:44:05 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,22 @@ void	secondcmd(t_list *data, char **envp)
 void	parsing(t_list *data, char **argv, char **envp)
 {
 	char	*cmdtmp;
-	char	*envpath;
 
 	data->input = ft_strdup(argv[1]);
 	data->output = ft_strdup(argv[4]);
 	cmdtmp = ft_strdup(argv[2]);
-	data->cmd1 = ft_split(cmdtmp, ' ');
+	data->cmd1 = ft_split(cmdtmp, ' '); // kayn t9ba hna spliti b tabs tahoma
+	// check for leaks + protections carefully
 	free(cmdtmp);
 	cmdtmp = ft_strdup(argv[3]);
 	data->cmd2 = ft_split(cmdtmp, ' ');
 	free(cmdtmp);
-	envpath = find_envp(envp);
-	if (envpath == NULL)
+	data->path = ft_split(find_envp(envp), ':');
+	if (!data->path)
 	{
 		perror("Environment error");
 		exit(EXIT_FAILURE);
 	}
-	data->path = ft_split(envpath, ':');
-	free(envpath);
 }
 
 void	execprg(t_list *data, char **envp)

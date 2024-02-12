@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 18:16:06 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/03 20:12:29 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:57:52 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ char	*ft_read(char *block, int fd, int *n)
 		res = ft_strdup(block);
 	}
 	free(buffer);
+	if (res)
+	{
+		if(res[0] == '\0')
+			return (free(res), NULL);
+	}
 	return (res);
 }
 

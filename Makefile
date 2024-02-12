@@ -4,7 +4,7 @@ NAME_BONUS = pipex_bonus
 
 CC		= cc
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -fsanitize=address
 
 RM		= rm -rf
 
@@ -13,6 +13,7 @@ SRCS	= src/pipex.c \
 
 SRCS_BONUS	= bonus_src/pipex_bonus.c \
 			  bonus_src/utils_bonus.c \
+			  bonus_src/utils2_bonus.c \
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -25,14 +26,14 @@ bonus: $(NAME_BONUS)
 %_bonus.o : bonus_src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-%.o: %.c pipex.h
+%.o: %.c pipex.h 
 	$(CC) ${CFLAGS} -c $< -o $@
 
-$(NAME):	$(OBJS)
+$(NAME):	$(OBJS) 
 			make -C utilities
 			$(CC) $(CFLAGS) -o $(NAME) $(OBJS) utilities/utils.a
 
-$(NAME_BONUS): $(OBJS_BONUS)
+$(NAME_BONUS): $(OBJS_BONUS) 
 			   make -C bonus_utilities
 			   $(CC) $(CFLAGS) -o $(NAME_BONUS) $(OBJS_BONUS) bonus_utilities/utils.a
 
