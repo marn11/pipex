@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 18:16:06 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/12 13:57:52 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:25:22 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_read(char *block, int fd, int *n)
 	free(buffer);
 	if (res)
 	{
-		if(res[0] == '\0')
+		if (res[0] == '\0')
 			return (free(res), NULL);
 	}
 	return (res);

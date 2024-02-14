@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 18:02:38 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/12 13:36:04 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/14 02:46:44 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	*get_cmd_path(t_list *data, char *cmd)
 		return (cmd);
 	return (NULL);
 }
+
 void	here_doc_data(int argc, char **argv, char **envp, t_list *data)
 {
 	if (argc < 6)
@@ -60,12 +61,37 @@ void	here_doc_data(int argc, char **argv, char **envp, t_list *data)
 		exit(EXIT_FAILURE);
 }
 
-void	handle_heredoc(t_list *data)
+void	handle_heredoc(t_list *data, int fd, int fd1)
 {
-	int		fd;
-	int		fd1;
-	char 	*line;
+	char	*line;
 	char	*tmp;
+
+	tmp = ft_strjoin(data->limiter, "\n");
+	while (1)
+	{
+		write(1, "here_doc > ", 11);
+		line = get_next_line(fd1);
+		if (!line)
+		{
+			close (fd);
+			break ;
+		}
+		if (!ft_strncmp(line, tmp, ft_strlen(tmp) + 1))
+		{
+			close (fd);
+			free(line);
+			break ;
+		}
+		write(fd, line, ft_strlen(line) - 1);
+		write(fd, "\n", 1);
+		free(line);
+	}
+}
+
+void	init(t_list *data)
+{
+	int	fd;
+	int	fd1;
 
 	fd = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
@@ -74,27 +100,7 @@ void	handle_heredoc(t_list *data)
 		exit(EXIT_FAILURE);
 	}
 	fd1 = dup(STDIN_FILENO);
-	line = NULL;
-	tmp = ft_strjoin(data->limiter, "\n");
-	while(1)
-	{
-		write(1, "here_doc > ", 11);
-		line = get_next_line(fd1);
-		printf("line = %s\n", line);
-		if (!line)
-		{
-			close (fd);
-			break;
-		}
-		if (!ft_strncmp(line, tmp, ft_strlen(tmp) + 1))
-		{
-			close (fd);
-			free(line);
-			break;
-		}
-		write(fd, line, ft_strlen(line) - 1);
-		write(fd, "\n", 1);
-		free(line);
-	}
+	handle_heredoc(data, fd, fd1);
 	close(fd);
+	close(fd1);
 }

@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:33:38 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/10 14:44:05 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/14 02:39:46 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	secondcmd(t_list *data, char **envp)
 		exit(EXIT_FAILURE);
 	}
 }
+// check for leaks + protections carefully
 
 void	parsing(t_list *data, char **argv, char **envp)
 {
@@ -59,11 +60,10 @@ void	parsing(t_list *data, char **argv, char **envp)
 	data->input = ft_strdup(argv[1]);
 	data->output = ft_strdup(argv[4]);
 	cmdtmp = ft_strdup(argv[2]);
-	data->cmd1 = ft_split(cmdtmp, ' '); // kayn t9ba hna spliti b tabs tahoma
-	// check for leaks + protections carefully
+	data->cmd1 = ft_split1(cmdtmp);
 	free(cmdtmp);
 	cmdtmp = ft_strdup(argv[3]);
-	data->cmd2 = ft_split(cmdtmp, ' ');
+	data->cmd2 = ft_split1(cmdtmp);
 	free(cmdtmp);
 	data->path = ft_split(find_envp(envp), ':');
 	if (!data->path)

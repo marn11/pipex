@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:33:00 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/06 17:33:02 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:06:43 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stddef.h>
-
 
 typedef struct s_data
 {

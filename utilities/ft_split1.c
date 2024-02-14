@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_splitt.c                                        :+:      :+:    :+:   */
+/*   ft_split1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 16:25:58 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/12 15:25:14 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:23:43 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utilities2.h"
+#include "utilities.h"
 
 static int	whitespace(char c)
 {
@@ -81,7 +81,7 @@ static	char	*getwords(int *i, const char *s)
 	return (res);
 }
 
-char	**ft_split2(char const *s)
+char	**ft_split1(char const *s)
 {
 	char	**res;
 	int		wc;
