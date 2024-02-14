@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:33:38 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/14 02:39:46 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:23:26 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	secondcmd(t_list *data, char **envp)
 		exit(EXIT_FAILURE);
 	}
 }
-// check for leaks + protections carefully
 
 void	parsing(t_list *data, char **argv, char **envp)
 {

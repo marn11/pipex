@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 17:02:20 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/14 10:56:13 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/14 12:15:44 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,21 @@ void	createpipes(t_list *data)
 		data->fdpipe[i] = malloc(sizeof (int) * 2);
 		if (!data->fdpipe[i])
 		{
+			while (i)
+				free(data->fdpipe[i--]);
+			free(data->pid);
 			exit(EXIT_FAILURE);
 		}
 		if (pipe(data->fdpipe[i]) == -1)
 		{
+			while(i)
+			{
+				i--;
+				close(data->fdpipe[i][0]);
+				close(data->fdpipe[i][1]);
+				free(data->fdpipe[i]);
+			}
+			free(data->pid);
 			exit(EXIT_FAILURE);
 		}
 		i++;
@@ -106,6 +117,14 @@ void	createpipes(t_list *data)
 	data->pid = malloc(sizeof (pid_t) * (data->nbcomm));
 	if (!data->pid)
 	{
+		while(i)
+		{
+			i--;
+			close(data->fdpipe[i][0]);
+			close(data->fdpipe[i][1]);
+			free(data->fdpipe[i]);
+		}
+		free(data->fdpipe);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -123,7 +142,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data.pid[i] = fork();
 		if (data.pid[i] == -1)
+		{
 			perror("No child :/");
+			exit(EXIT_FAILURE);
+		}
 		if (data.pid[i] == 0)
 			execprg(&data, i, envp);
 		else
