@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 18:02:38 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/14 02:46:44 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:14:57 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ void	init(t_list *data)
 	int	fd;
 	int	fd1;
 
+	//fill data into a var
 	fd = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	//write(fd, data, strlendata);
+	//unlink(fd);
 	if (fd == -1)
 	{
 		perror("Error in opening the temporary file");

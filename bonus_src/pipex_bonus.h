@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 01:15:33 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/14 10:22:16 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:04:05 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*find_envp(char **envp);
 char	*get_cmd_path(t_list *data, char *cmd);
 void	free_env(t_list *data);
 void	free_cmd(t_list *data);
-void	openfiles(int argc, char **argv, t_list *data);
+int		openfiles(int argc, char **argv, t_list *data);
 void	createpipes(t_list *data);
 void	here_doc_data(int argc, char **argv, char **envp, t_list *data);
 int		ft_data(t_list *data);
@@ -55,5 +55,6 @@ void	parent_close(t_list *data, int i);
 int		ft_data(t_list *data);
 void	firstcmd(t_list *data, int i);
 void	lastcmd(t_list *data, int i);
+void	free_misc(t_list *data);
 
 #endif

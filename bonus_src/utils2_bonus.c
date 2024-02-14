@@ -6,7 +6,7 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 19:01:53 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/14 10:45:38 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:04:21 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@ void	free_env(t_list *data)
 	free (data->path);
 }
 
+void	free_misc(t_list *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nbcomm - 1)
+		free(data->fdpipe[i++]);
+	free(data->fdpipe);
+	free(data->pid);
+	free(data->cmdpaths);
+	
+}
+
 void	free_cmd(t_list *data)
 {
 	int	i;
@@ -34,6 +47,7 @@ void	free_cmd(t_list *data)
 		while (data->commands[i][j])
 			free (data->commands[i][j++]);
 		free (data->commands[i]);
+		free(data->cmdpaths[i]);
 		i++;
 	}
 	free(data->commands);

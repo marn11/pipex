@@ -6,13 +6,13 @@
 /*   By: mbenchel <mbenchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 17:02:20 by mbenchel          #+#    #+#             */
-/*   Updated: 2024/02/14 12:15:44 by mbenchel         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:02:58 by mbenchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	openfiles(int argc, char **argv, t_list *data)
+int	openfiles(int argc, char **argv, t_list *data)
 {
 	if (data->heredoc_flag)
 	{
@@ -31,10 +31,7 @@ void	openfiles(int argc, char **argv, t_list *data)
 		data->fd2 = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	}
 	if (data->fd2 == -1)
-	{
-		perror("Error in opening the output file");
-		exit(EXIT_FAILURE);
-	}
+		return(free_cmd(data), free_env(data), free_misc(data), 1);
 }
 
 void	execprg(t_list *data, int i, char **envp)
