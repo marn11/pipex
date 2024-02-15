@@ -100,11 +100,16 @@ int	parsing(t_list *data, char **argv, char **envp)
 {
 	int		i;
 	int		paramaters;
+	char	*env_path;
 
 	i = 0;
-	data->path = ft_split(find_envp(envp), ':');
-	if (!data->path)
+	env_path = find_envp(envp);
+	if (!env_path)
 		return (perror("Error in finding the PATH"), 1);
+	data->path = ft_split(env_path, ':');
+	free(env_path);
+	if (!data->path)
+		return (perror("Error in splitting the PATH"),free_env(data), 1);
 	data->commands = malloc(sizeof(char **) * data->nbcomm + 1);
 	if (!data->commands)
 		return (free_env(data), 1);
@@ -123,4 +128,10 @@ int	parsing(t_list *data, char **argv, char **envp)
 	if (ft_data(data))
 		return (1);
 	return (0);
+}
+
+void cleanup(t_list *data) {
+    free_cmd(data);
+    free_env(data);
+    free_misc(data);
 }
