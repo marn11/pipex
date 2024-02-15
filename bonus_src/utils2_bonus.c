@@ -30,6 +30,7 @@ void	free_misc(t_list *data)
 	while (i < data->nbcomm - 1)
 		free(data->fdpipe[i++]);
 	free(data->fdpipe);
+	data->fdpipe =  NULL;
 	free(data->pid);
 	free(data->cmdpaths);
 	
@@ -48,6 +49,7 @@ void	free_cmd(t_list *data)
 			free (data->commands[i][j++]);
 		free (data->commands[i]);
 		free(data->cmdpaths[i]);
+		data->cmdpaths[i] = NULL;
 		i++;
 	}
 	free(data->commands);
@@ -94,7 +96,7 @@ void	execprghelper(t_list *data, int i)
 		close(data->fdpipe[i][1]);
 		i++;
 	}
-}
+}	
 
 int	parsing(t_list *data, char **argv, char **envp)
 {

@@ -121,6 +121,9 @@ void	createpipes(t_list *data)
 		free_misc(data);
 		exit(1);
 	}
+		free_cmd(data);
+		free_env(data);
+		free_misc(data);
 }
 
 int	main(int argc, char **argv, char **envp)
