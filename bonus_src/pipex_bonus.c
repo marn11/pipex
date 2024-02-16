@@ -86,7 +86,12 @@ void	usage_check(int argc, char **argv, char **envp, t_list *data)
 	if (!data->heredoc_flag)
 		check_files(argv[1], argv[argc - 1]);
 	if (parsing(data, argv, envp))
-		exit(EXIT_FAILURE);
+	{
+		free_cmd(data);
+		free_env(data);
+		free_misc(data);
+		exit(1);
+	}
 }
 
 void	createpipes(t_list *data)
@@ -121,9 +126,6 @@ void	createpipes(t_list *data)
 		free_misc(data);
 		exit(1);
 	}
-		free_cmd(data);
-		free_env(data);
-		free_misc(data);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -155,6 +157,8 @@ int	main(int argc, char **argv, char **envp)
 		waitpid(data.pid[i], NULL, 0);
 	}
 	unlink(".tmp.txt");
-	return(free_cmd(&data), free_env(&data), free_misc(&data), 1);
+	free_cmd(&data);
+	free_env(&data);
+	free_misc(&data);
 	return (0);
 }

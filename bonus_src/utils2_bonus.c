@@ -17,9 +17,13 @@ void	free_env(t_list *data)
 	int	i;
 
 	i = 0;
-	while (data->path[i])
-		free (data->path[i++]);
-	free (data->path);
+	if (data->path)
+	{
+		while (data->path[i])
+			free (data->path[i++]);
+		free (data->path);
+		data->path = NULL;
+	}
 }
 
 void	free_misc(t_list *data)
@@ -27,13 +31,18 @@ void	free_misc(t_list *data)
 	int	i;
 
 	i = 0;
-	while (i < data->nbcomm - 1)
-		free(data->fdpipe[i++]);
-	free(data->fdpipe);
-	data->fdpipe =  NULL;
-	free(data->pid);
-	free(data->cmdpaths);
-	
+	if (data->fdpipe)
+	{
+		while (i < data->nbcomm - 1)
+			free(data->fdpipe[i++]);
+		free(data->fdpipe);
+		data->fdpipe =  NULL;
+		if(data->pid)
+		{
+			free(data->pid);
+			data->pid = NULL;
+		}
+	}
 }
 
 void	free_cmd(t_list *data)
@@ -42,17 +51,27 @@ void	free_cmd(t_list *data)
 	int	j;
 
 	i = 0;
-	while (i < data->nbcomm)
+	if (data->commands)
 	{
-		j = 0;
-		while (data->commands[i][j])
-			free (data->commands[i][j++]);
-		free (data->commands[i]);
-		free(data->cmdpaths[i]);
-		data->cmdpaths[i] = NULL;
-		i++;
+		while (i < data->nbcomm)
+		{
+			j = 0;
+			while (data->commands[i][j])
+				free (data->commands[i][j++]);
+			free (data->commands[i]);
+			i++;
+		}
+		free(data->commands);
+		data->commands = NULL;
 	}
-	free(data->commands);
+	if (data->cmdpaths)
+	{
+		i = 0;
+		while (i < data->nbcomm && data->cmdpaths[i])
+			free(data->cmdpaths[i++]);
+	}
+	free(data->cmdpaths);
+	data->cmdpaths = NULL;
 }
 
 int	check_files(char *input, char *output)
@@ -114,7 +133,7 @@ int	parsing(t_list *data, char **argv, char **envp)
 		return (perror("Error in splitting the PATH"),free_env(data), 1);
 	data->commands = malloc(sizeof(char **) * data->nbcomm + 1);
 	if (!data->commands)
-		return (free_env(data), 1);
+		return (free_env(data),free_cmd(data), 1);
 	if (data->heredoc_flag)
 		paramaters = 3;
 	else

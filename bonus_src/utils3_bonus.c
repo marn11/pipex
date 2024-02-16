@@ -38,7 +38,7 @@ int	ft_data(t_list *data)
 	i = 0;
 	data->fdpipe = malloc(sizeof(int *) * (data->nbcomm - 1));
 	if (!data->fdpipe)
-		return (free (data->cmdpaths), free_env(data), free_cmd(data), 1);
+		return (free_env(data), free_cmd(data), 1);
 	while (i < data->nbcomm)
 	{
 		if (data->commands[i][0])
