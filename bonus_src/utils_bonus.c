@@ -61,7 +61,11 @@ void	here_doc_data(int argc, char **argv, char **envp, t_list *data)
 		exit(EXIT_FAILURE);
 	}
 	if (parsing(data, argv, envp))
+	{
 		exit(EXIT_FAILURE);
+	}
+	free_cmd(data);
+    free_env(data);
 }
 
 void	handle_heredoc(t_list *data, int fd, int fd1)

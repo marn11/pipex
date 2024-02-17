@@ -87,12 +87,9 @@ void	usage_check(int argc, char **argv, char **envp, t_list *data)
 		check_files(argv[1], argv[argc - 1]);
 	if (parsing(data, argv, envp))
 	{
-		printf("here1\n");
-		// free_cmd(data);
-		printf("here2\n");
-		// free_env(data);
-		printf("here3\n");
-		// free_misc(data);
+		free_cmd(data);
+		free_env(data);
+		free_misc(data);
 		exit(1);
 	}
 }
@@ -132,7 +129,7 @@ void	createpipes(t_list *data)
 }
 void f()
 {
-	system("leaks pipex_bonus");
+	system("leaks pipex_bonus > leaks");
 }
 
 int	main(int argc, char **argv, char **envp)

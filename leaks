@@ -1,88 +1,25 @@
-here_doc > Process:         pipex_bonus [2566]
+Process:         pipex_bonus [8597]
 Path:            /Volumes/VOLUME/*/pipex_bonus
-Load Address:    0x10f879000
+Load Address:    0x105c4e000
 Identifier:      pipex_bonus
 Version:         ???
 Code Type:       X86-64
 Parent Process:  zsh [1015]
 
-Date/Time:       2024-02-17 15:02:11.760 +0100
-Launch Time:     2024-02-17 15:02:07.583 +0100
+Date/Time:       2024-02-17 15:25:16.908 +0100
+Launch Time:     2024-02-17 15:25:14.727 +0100
 OS Version:      Mac OS X 10.15.7 (19H2026)
 Report Version:  7
 Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
 Analysis Tool Version:  Xcode 12.4 (12D4e)
 
-Physical footprint:         324K
-Physical footprint (peak):  324K
+Physical footprint:         332K
+Physical footprint (peak):  332K
 ----
 
 leaks Report Version: 4.0
-Process 2566: 181 nodes malloced for 25 KB
-Process 2566: 24 leaks for 768 total leaked bytes.
+Process 8597: 158 nodes malloced for 12 KB
+Process 8597: 1 leak for 16 total leaked bytes.
 
-    24 (768 bytes) << TOTAL >>
+    1 (16 bytes) ROOT LEAK: 0x7faffcc059c0 [16]
 
-      15 (592 bytes) ROOT LEAK: 0x7fb0c2405ac0 [128]
-         1 (64 bytes) 0x7fb0c2405ba0 [64]  length: 63  "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-         1 (64 bytes) 0x7fb0c2405c70 [64]  length: 60  "/Library/Frameworks/Mono.framework/Versions/Current/Commands"
-         1 (64 bytes) 0x7fb0c2405cd0 [64]  length: 63  "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-         1 (32 bytes) 0x7fb0c2405b40 [32]  length: 25  "/Users/mbenchel/.brew/bin"
-         1 (32 bytes) 0x7fb0c2405b60 [32]  length: 25  "/Users/mbenchel/.brew/bin"
-         1 (32 bytes) 0x7fb0c2405b80 [32]  length: 25  "/Users/mbenchel/.brew/bin"
-         1 (32 bytes) 0x7fb0c2405c30 [32]  length: 16  "/usr/local/munki"
-         1 (32 bytes) 0x7fb0c2405c50 [32]  length: 22  "/Library/Apple/usr/bin"
-         1 (32 bytes) 0x7fb0c2405cb0 [32]  length: 25  "/Users/mbenchel/.brew/bin"
-         1 (16 bytes) 0x7fb0c2405be0 [16]  length: 14  "/usr/local/bin"
-         1 (16 bytes) 0x7fb0c2405bf0 [16]  length: 8  "/usr/bin"
-         1 (16 bytes) 0x7fb0c2405c00 [16]  length: 4  "/bin"
-         1 (16 bytes) 0x7fb0c2405c10 [16]  length: 9  "/usr/sbin"
-         1 (16 bytes) 0x7fb0c2405c20 [16]  length: 5  "/sbin"
-
-      5 (96 bytes) ROOT LEAK: 0x7fb0c2405940 [32]
-         2 (32 bytes) 0x7fb0c2405960 [16]
-            1 (16 bytes) 0x7fb0c2405970 [16]  length: 3  "cat"
-         2 (32 bytes) 0x7fb0c2405980 [16]
-            1 (16 bytes) 0x7fb0c2405990 [16]  length: 3  "cat"
-
-      3 (64 bytes) ROOT LEAK: 0x7fb0c24059a0 [32]
-         1 (16 bytes) 0x7fb0c24059d0 [16]  length: 8  "/bin/cat"
-         1 (16 bytes) 0x7fb0c24059e0 [16]  length: 8  "/bin/cat"
-
-      1 (16 bytes) ROOT LEAK: 0x7fb0c24059c0 [16]
-
-env_path ===>0x7fb0c2405940
-data->path ===>0x7fb0c2405b40
-data->path ===>0x7fb0c2405b60
-data->path ===>0x7fb0c2405b80
-data->path ===>0x7fb0c2405ba0
-data->path ===>0x7fb0c2405be0
-data->path ===>0x7fb0c2405bf0
-data->path ===>0x7fb0c2405c00
-data->path ===>0x7fb0c2405c10
-data->path ===>0x7fb0c2405c20
-data->path ===>0x7fb0c2405c30
-data->path ===>0x7fb0c2405c50
-data->path ===>0x7fb0c2405c70
-data->path ===>0x7fb0c2405cb0
-data->path ===>0x7fb0c2405cd0
-data->commands ===>0x7fb0c2405940
-data->cmdpaths ===>0x7fb0c24059a0
-env_path ===>0x7fb0c2405d10
-data->path ===>0x7fb0c2405aa0
-data->path ===>0x7fb0c24059f0
-data->path ===>0x7fb0c2405e90
-data->path ===>0x7fb0c2405eb0
-data->path ===>0x7fb0c2405a10
-data->path ===>0x7fb0c2405ef0
-data->path ===>0x7fb0c2405f00
-data->path ===>0x7fb0c2405f10
-data->path ===>0x7fb0c2405f20
-data->path ===>0x7fb0c2405f30
-data->path ===>0x7fb0c2405f50
-data->path ===>0x7fb0c2405f70
-data->path ===>0x7fb0c2405fb0
-data->path ===>0x7fb0c2405fd0
-data->commands ===>0x7fb0c2405d10
-data->cmdpaths ===>0x7fb0c2405d70
-2

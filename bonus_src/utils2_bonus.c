@@ -57,7 +57,10 @@ void	free_cmd(t_list *data)
 		{
 			j = 0;
 			while (data->commands[i][j])
+			{
+				printf("free data->commands[i][j]\n");
 				free (data->commands[i][j++]);
+			}
 			free (data->commands[i]);
 			i++;
 		}
@@ -69,7 +72,6 @@ void	free_cmd(t_list *data)
 		i = 0;
 		while (i < data->nbcomm && data->cmdpaths[i])
 			free(data->cmdpaths[i++]);
-		printf("%d\n", i);
 	}
 	free(data->cmdpaths);
 	data->cmdpaths = NULL;
@@ -126,7 +128,6 @@ int	parsing(t_list *data, char **argv, char **envp)
 
 	i = 0;
 	env_path = find_envp(envp);
-	printf("env_path ===>%p\n", env_path);
 	if (!env_path)
 		return (perror("Error in finding the PATH"), 1);
 	data->path = ft_split(env_path, ':');
@@ -139,7 +140,7 @@ int	parsing(t_list *data, char **argv, char **envp)
 	data->commands = malloc(sizeof(char **) * data->nbcomm + 1);
 	printf("data->commands ===>%p\n", data->commands);
 	if (!data->commands)
-		return (free_env(data), 1);
+		return (1);
 	if (data->heredoc_flag)
 		paramaters = 3;
 	else
@@ -150,11 +151,11 @@ int	parsing(t_list *data, char **argv, char **envp)
 		i++;
 	}
 	data->cmdpaths = malloc(sizeof(char *) * data->nbcomm + 1);
-	printf("data->cmdpaths ===>%p\n", data->cmdpaths);
 	if (!data->cmdpaths)
-		return (free_env(data), free_cmd(data), 1);
+		return (1);
 	if (ft_data(data))
 		return (1);
+		printf("here\n");
 	return (0);
 }
 
