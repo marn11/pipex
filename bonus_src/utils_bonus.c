@@ -66,6 +66,7 @@ void	here_doc_data(int argc, char **argv, char **envp, t_list *data)
 	}
 	free_cmd(data);
     free_env(data);
+	free(data->fdpipe);
 }
 
 void	handle_heredoc(t_list *data, int fd, int fd1)

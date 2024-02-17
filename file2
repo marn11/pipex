@@ -1,55 +1,59 @@
-env_path ===>0x7f949b405940
-data->path ===>0x7f949b405b40
-data->path ===>0x7f949b405b60
-data->path ===>0x7f949b405b80
-data->path ===>0x7f949b405ba0
-data->path ===>0x7f949b405be0
-data->path ===>0x7f949b405bf0
-data->path ===>0x7f949b405c00
-data->path ===>0x7f949b405c10
-data->path ===>0x7f949b405c20
-data->path ===>0x7f949b405c30
-data->path ===>0x7f949b405c50
-data->path ===>0x7f949b405c70
-data->path ===>0x7f949b405cb0
-data->path ===>0x7f949b405cd0
-data->commands ===>0x7f949b405940
-data->cmdpaths ===>0x7f949b4059c0
-data-cmdpaths[0x0]
-data-cmdpaths[0x7f949b405d10]
-data-cmdpaths[0x7f949b405d20]
-0
-dfgd
-fgfg
-f
-fgd
-fg
-fgd
-gdf
-dkffg
+NAME = pipex
 
-gd
-das
-ads
-d
-as
-ads
-fdgfg
-k
-h
-h
-dsad
-asd
-asd
-asd
-asd
-sa
-das
-das
-dsa
-ads
-env
-DASD
-ASD
-env
-end
+NAME_BONUS = pipex_bonus
+
+CC		= cc
+
+CFLAGS	= -Wall -Wextra -Werror
+
+RM		= rm -rf
+
+SRCS	= src/pipex.c \
+		  src/pipexutils.c \
+		  utilities/ft_split.c \
+		  utilities/ft_split1.c \
+		  utilities/pipex_utils.c \
+		  utilities/utils.c \
+
+SRCS_BONUS	= bonus_src/pipex_bonus.c \
+			  bonus_src/utils_bonus.c \
+			  bonus_src/utils2_bonus.c \
+			  bonus_src/utils3_bonus.c \
+			  bonus_utilities/ft_split2.c \
+			  bonus_utilities/ft_splitt.c \
+			  bonus_utilities/get_next_line2.c \
+			  bonus_utilities/pipex_utils2.c \
+			  bonus_utilities/utils2.c \
+
+
+OBJS	= $(SRCS:.c=.o)
+
+
+OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
+
+all:	$(NAME)
+
+bonus: $(NAME_BONUS)
+
+%_bonus.o : bonus_src/%.c bonus_utilities/%.c  bonus_src/%.h bonus_utilities/%.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: %.c src/pipex.h utilities/utilities.h
+	$(CC) ${CFLAGS} -c $< -o $@
+
+$(NAME):	$(OBJS) 
+			$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+
+$(NAME_BONUS): $(OBJS_BONUS) 
+			   $(CC) $(CFLAGS) -o $(NAME_BONUS) $(OBJS_BONUS)
+
+$(OBJS_BONUS): bonus_src/pipex_bonus.h bonus_utilities/get_next_line2.h bonus_utilities/utilities2.h
+clean:
+			$(RM) $(OBJS) $(OBJS_BONUS)
+
+fclean:		clean
+			$(RM) $(NAME) $(NAME_BONUS)
+
+re:			fclean all
+
+.PHONY : clean fclean re all

@@ -48,8 +48,8 @@ int	ft_data(t_list *data)
 		if(data->cmdpaths[i] == NULL)
 			return (1);
 		i++;
-		data->cmdpaths[i] = NULL;
 	}
+	data->cmdpaths[i] = NULL;
 	return (0);
 }
 

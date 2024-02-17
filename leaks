@@ -1,13 +1,13 @@
-Process:         pipex_bonus [13209]
+Process:         pipex_bonus [33329]
 Path:            /Volumes/VOLUME/*/pipex_bonus
-Load Address:    0x10d905000
+Load Address:    0x1066ec000
 Identifier:      pipex_bonus
 Version:         ???
 Code Type:       X86-64
 Parent Process:  zsh [1015]
 
-Date/Time:       2024-02-17 15:39:14.480 +0100
-Launch Time:     2024-02-17 15:39:03.559 +0100
+Date/Time:       2024-02-17 18:08:20.107 +0100
+Launch Time:     2024-02-17 18:08:17.301 +0100
 OS Version:      Mac OS X 10.15.7 (19H2026)
 Report Version:  7
 Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
@@ -18,8 +18,6 @@ Physical footprint (peak):  316K
 ----
 
 leaks Report Version: 4.0
-Process 13209: 158 nodes malloced for 12 KB
-Process 13209: 1 leak for 16 total leaked bytes.
-
-    1 (16 bytes) ROOT LEAK: 0x7fc6c1c059c0 [16]
+Process 33329: 157 nodes malloced for 12 KB
+Process 33329: 0 leaks for 0 total leaked bytes.
 

@@ -97,13 +97,14 @@ void	execprg(t_list *data, char **envp)
 }
 void f()
 {
-	system("leaks pipex");
+	system("leaks pipex_bonus > leaks");
 }
 
 int	main(int argc, char *argv[], char **envp)
 {
 	t_list	data;
 
+	atexit(f);
 	if (argc == 5)
 	{
 		parsing(&data, argv, envp);

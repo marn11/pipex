@@ -34,20 +34,15 @@ void	free_misc(t_list *data)
 	if (data->fdpipe)
 	{
 		while (i < data->nbcomm - 1)
-		{
-			if(data->fdpipe)
-				free(data->fdpipe[i++]);
-			else
-				i++;
-		}
+			free(data->fdpipe[i++]);
 		free(data->fdpipe);
 		data->fdpipe =  NULL;
+	}
 		if(data->pid)
 		{
 			free(data->pid);
 			data->pid = NULL;
 		}
-	}
 }
 
 void	free_cmd(t_list *data)
@@ -62,10 +57,7 @@ void	free_cmd(t_list *data)
 		{
 			j = 0;
 			while (data->commands[i][j])
-			{
-				printf("free data->commands[i][j]\n");
 				free (data->commands[i][j++]);
-			}
 			free (data->commands[i]);
 			i++;
 		}
