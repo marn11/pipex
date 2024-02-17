@@ -34,7 +34,12 @@ void	free_misc(t_list *data)
 	if (data->fdpipe)
 	{
 		while (i < data->nbcomm - 1)
-			free(data->fdpipe[i++]);
+		{
+			if(data->fdpipe)
+				free(data->fdpipe[i++]);
+			else
+				i++;
+		}
 		free(data->fdpipe);
 		data->fdpipe =  NULL;
 		if(data->pid)
@@ -120,6 +125,12 @@ void	execprghelper(t_list *data, int i)
 	}
 }	
 
+void cleanup(t_list *data) {
+    free_cmd(data);
+    free_env(data);
+    free_misc(data);
+}
+
 int	parsing(t_list *data, char **argv, char **envp)
 {
 	int		i;
@@ -132,13 +143,9 @@ int	parsing(t_list *data, char **argv, char **envp)
 		return (perror("Error in finding the PATH"), 1);
 	data->path = ft_split(env_path, ':');
 	free(env_path);
-	int f = 0;
-	while(data->path[f])
-		printf("data->path ===>%p\n", data->path[f++]);
 	if (!data->path)
 		return (perror("Error in splitting the PATH"), 1);
 	data->commands = malloc(sizeof(char **) * data->nbcomm + 1);
-	printf("data->commands ===>%p\n", data->commands);
 	if (!data->commands)
 		return (1);
 	if (data->heredoc_flag)
@@ -155,12 +162,6 @@ int	parsing(t_list *data, char **argv, char **envp)
 		return (1);
 	if (ft_data(data))
 		return (1);
-		printf("here\n");
 	return (0);
 }
 
-void cleanup(t_list *data) {
-    free_cmd(data);
-    free_env(data);
-    free_misc(data);
-}

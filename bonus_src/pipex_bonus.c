@@ -89,7 +89,7 @@ void	usage_check(int argc, char **argv, char **envp, t_list *data)
 	{
 		free_cmd(data);
 		free_env(data);
-		free_misc(data);
+		// free_misc(data);
 		exit(1);
 	}
 }
@@ -123,7 +123,6 @@ void	createpipes(t_list *data)
 	{
 		free_cmd(data);
 		free_env(data);
-		free_misc(data);
 		exit(1);
 	}
 }
