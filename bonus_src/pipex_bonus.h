@@ -31,7 +31,6 @@ typedef struct s_data
 	int		nbcomm;
 	char	*limiter;
 	char	***commands;
-	char	*cmdpath;
 	int		heredoc_flag;
 	pid_t	*pid;
 }	t_list;

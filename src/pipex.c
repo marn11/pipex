@@ -95,6 +95,10 @@ void	execprg(t_list *data, char **envp)
 			secondcmd(data, envp);
 	}
 }
+void f()
+{
+	system("leaks pipex");
+}
 
 int	main(int argc, char *argv[], char **envp)
 {
@@ -115,6 +119,7 @@ int	main(int argc, char *argv[], char **envp)
 			perror("Output file doesn't exist");
 			exit(EXIT_FAILURE);
 		}
+		atexit(f);
 		execprg(&data, envp);
 	}
 	else

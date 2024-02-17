@@ -32,6 +32,7 @@ char	*find_envp(char **envp)
 char	*get_cmd_path(t_list *data, char *cmd)
 {
 	char	*cmdpath;
+	char	*prefix;
 	int		i;
 
 	i = 0;
@@ -39,13 +40,15 @@ char	*get_cmd_path(t_list *data, char *cmd)
 		return (ft_strdup(cmd));
 	while (data->path[i])
 	{
-		cmdpath = ft_strjoin(ft_strjoin(data->path[i], "/"), cmd);
+		prefix = ft_strjoin(data->path[i], "/");
+		cmdpath = ft_strjoin(prefix, cmd);
+		free(prefix);
 		if (!access(cmdpath, X_OK))
 			return (cmdpath);
 		free(cmdpath);
 		i++;
 	}
 	if (!access(cmd, X_OK))
-		return (cmd);
+		return (ft_strdup(cmd));
 	return (NULL);
 }

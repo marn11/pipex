@@ -87,9 +87,12 @@ void	usage_check(int argc, char **argv, char **envp, t_list *data)
 		check_files(argv[1], argv[argc - 1]);
 	if (parsing(data, argv, envp))
 	{
-		free_cmd(data);
-		free_env(data);
-		free_misc(data);
+		printf("here1\n");
+		// free_cmd(data);
+		printf("here2\n");
+		// free_env(data);
+		printf("here3\n");
+		// free_misc(data);
 		exit(1);
 	}
 }
@@ -127,6 +130,10 @@ void	createpipes(t_list *data)
 		exit(1);
 	}
 }
+void f()
+{
+	system("leaks pipex_bonus");
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -134,6 +141,7 @@ int	main(int argc, char **argv, char **envp)
 	int		i;
 
 	i = 0;
+	atexit(f);
 	usage_check(argc, argv, envp, &data);
 	openfiles(argc, argv, &data);
 	createpipes(&data);

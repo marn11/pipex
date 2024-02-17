@@ -45,7 +45,10 @@ int	ft_data(t_list *data)
 			data->cmdpaths[i] = get_cmd_path(data, data->commands[i][0]);
 		else
 			data->cmdpaths[i] = NULL;
+		if(data->cmdpaths[i] == NULL)
+			return (free_env(data), free_cmd(data) ,1);
 		i++;
+		data->cmdpaths[i] = NULL;
 	}
 	return (0);
 }
