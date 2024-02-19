@@ -28,6 +28,7 @@ void	firstcmd(t_list *data, char **envp)
 	if (execve(data->cmd1path, data->cmd1, envp) == -1)
 	{
 		perror("Error in execution");
+		free(data->cmd1path);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -48,6 +49,8 @@ void	secondcmd(t_list *data, char **envp)
 	if (execve(data->cmd2path, data->cmd2, envp) == -1)
 	{
 		perror("Error in execution");
+		free(data->cmd1path);
+		free(data->cmd2path);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -55,6 +58,7 @@ void	secondcmd(t_list *data, char **envp)
 void	parsing(t_list *data, char **argv, char **envp)
 {
 	char	*cmdtmp;
+	char	*tmpenv;
 
 	data->input = ft_strdup(argv[1]);
 	data->output = ft_strdup(argv[4]);
@@ -64,12 +68,14 @@ void	parsing(t_list *data, char **argv, char **envp)
 	cmdtmp = ft_strdup(argv[3]);
 	data->cmd2 = ft_split1(cmdtmp);
 	free(cmdtmp);
-	data->path = ft_split(find_envp(envp), ':');
-	if (!data->path)
+	tmpenv = find_envp(envp);
+	if (!tmpenv)
 	{
 		perror("Environment error");
 		exit(EXIT_FAILURE);
 	}
+	data->path = ft_split(tmpenv, ':');
+	free(tmpenv);
 }
 
 void	execprg(t_list *data, char **envp)
@@ -95,16 +101,11 @@ void	execprg(t_list *data, char **envp)
 			secondcmd(data, envp);
 	}
 }
-void f()
-{
-	system("leaks pipex_bonus > leaks");
-}
 
 int	main(int argc, char *argv[], char **envp)
 {
 	t_list	data;
 
-	atexit(f);
 	if (argc == 5)
 	{
 		parsing(&data, argv, envp);
@@ -120,7 +121,6 @@ int	main(int argc, char *argv[], char **envp)
 			perror("Output file doesn't exist");
 			exit(EXIT_FAILURE);
 		}
-		atexit(f);
 		execprg(&data, envp);
 	}
 	else

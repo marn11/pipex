@@ -45,7 +45,7 @@ int	ft_data(t_list *data)
 			data->cmdpaths[i] = get_cmd_path(data, data->commands[i][0]);
 		else
 			data->cmdpaths[i] = NULL;
-		if(data->cmdpaths[i] == NULL)
+		if (data->cmdpaths[i] == NULL)
 			return (1);
 		i++;
 	}
@@ -65,4 +65,11 @@ void	lastcmd(t_list *data, int i)
 	close (data->fdpipe[i - 1][1]);
 	dup2(data->fdpipe[i - 1][0], 0);
 	dup2(data->fd2, 1);
+}
+
+void	cleanup(t_list *data)
+{
+	free_env(data);
+	free_cmd(data);
+	free_misc(data);
 }

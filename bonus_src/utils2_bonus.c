@@ -36,42 +36,13 @@ void	free_misc(t_list *data)
 		while (i < data->nbcomm - 1)
 			free(data->fdpipe[i++]);
 		free(data->fdpipe);
-		data->fdpipe =  NULL;
+		data->fdpipe = NULL;
 	}
-		if(data->pid)
-		{
-			free(data->pid);
-			data->pid = NULL;
-		}
-}
-
-void	free_cmd(t_list *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	if (data->commands)
+	if (data->pid)
 	{
-		while (i < data->nbcomm)
-		{
-			j = 0;
-			while (data->commands[i][j])
-				free (data->commands[i][j++]);
-			free (data->commands[i]);
-			i++;
-		}
-		free(data->commands);
-		data->commands = NULL;
+		free(data->pid);
+		data->pid = NULL;
 	}
-	if (data->cmdpaths)
-	{
-		i = 0;
-		while (i < data->nbcomm && data->cmdpaths[i])
-			free(data->cmdpaths[i++]);
-	}
-	free(data->cmdpaths);
-	data->cmdpaths = NULL;
 }
 
 int	check_files(char *input, char *output)
@@ -115,40 +86,27 @@ void	execprghelper(t_list *data, int i)
 		close(data->fdpipe[i][1]);
 		i++;
 	}
-}	
-
-void cleanup(t_list *data) {
-    free_cmd(data);
-    free_env(data);
-    free_misc(data);
 }
 
 int	parsing(t_list *data, char **argv, char **envp)
 {
 	int		i;
-	int		paramaters;
+	int		parameters;
 	char	*env_path;
 
 	i = 0;
 	env_path = find_envp(envp);
 	if (!env_path)
-		return (perror("Error in finding the PATH"), 1);
+		return (perror("Error in finding the PATH"), exit(1), 1);
 	data->path = ft_split(env_path, ':');
 	free(env_path);
 	if (!data->path)
-		return (perror("Error in splitting the PATH"), 1);
+		return (perror("Error in splitting the PATH"), exit(1), 1);
 	data->commands = malloc(sizeof(char **) * data->nbcomm + 1);
 	if (!data->commands)
 		return (1);
-	if (data->heredoc_flag)
-		paramaters = 3;
-	else
-		paramaters = 2;
-	while (i < data->nbcomm)
-	{
-		data->commands[i] = ft_split2(argv[i + paramaters]);
-		i++;
-	}
+	parameters = count_params(data);
+	init_comms(data, argv, parameters);
 	data->cmdpaths = malloc(sizeof(char *) * data->nbcomm + 1);
 	if (!data->cmdpaths)
 		return (1);
@@ -156,4 +114,3 @@ int	parsing(t_list *data, char **argv, char **envp)
 		return (1);
 	return (0);
 }
-

@@ -19,6 +19,7 @@ SRCS_BONUS	= bonus_src/pipex_bonus.c \
 			  bonus_src/utils_bonus.c \
 			  bonus_src/utils2_bonus.c \
 			  bonus_src/utils3_bonus.c \
+			  bonus_src/utils4_bonus.c \
 			  bonus_utilities/ft_split2.c \
 			  bonus_utilities/ft_splitt.c \
 			  bonus_utilities/get_next_line2.c \

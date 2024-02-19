@@ -35,14 +35,14 @@ typedef struct s_data
 	pid_t	*pid;
 }	t_list;
 
-void	execprg(t_list *data, int i, char **envp);
+int		execprg(t_list *data, int i, char **envp);
 int		parsing(t_list *data, char **argv, char **envp);
 char	*find_envp(char **envp);
 char	*get_cmd_path(t_list *data, char *cmd);
 void	free_env(t_list *data);
 void	free_cmd(t_list *data);
 int		openfiles(int argc, char **argv, t_list *data);
-void	createpipes(t_list *data);
+int		createpipes(t_list *data);
 void	here_doc_data(int argc, char **argv, char **envp, t_list *data);
 int		ft_data(t_list *data);
 void	handle_heredoc(t_list *data, int fd, int fd1);
@@ -55,5 +55,8 @@ int		ft_data(t_list *data);
 void	firstcmd(t_list *data, int i);
 void	lastcmd(t_list *data, int i);
 void	free_misc(t_list *data);
+void	cleanup(t_list *data);
+int		count_params(t_list *data);
+void	init_comms(t_list *data, char **argv, int parameters);
 
 #endif

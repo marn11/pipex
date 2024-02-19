@@ -65,7 +65,7 @@ void	here_doc_data(int argc, char **argv, char **envp, t_list *data)
 		exit(EXIT_FAILURE);
 	}
 	free_cmd(data);
-    free_env(data);
+	free_env(data);
 	free(data->fdpipe);
 }
 
@@ -102,10 +102,7 @@ void	init(t_list *data)
 	int	fd;
 	int	fd1;
 
-	//fill data into a var
 	fd = open(".tmp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	//write(fd, data, strlendata);
-	//unlink(fd);
 	if (fd == -1)
 	{
 		perror("Error in opening the temporary file");

@@ -19,13 +19,10 @@ int	openfiles(int argc, char **argv, t_list *data)
 		init(data);
 		data->fd1 = open(".tmp.txt", O_RDONLY);
 		if (data->fd1 == -1)
-		{
-			perror("Error in opening the input file");
-			exit(EXIT_FAILURE);
-		}
+			return (perror("Error in opening the input file"), exit(1), 1);
 		data->fd2 = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (data->fd2 == -1)
-			return(free_cmd(data), free_env(data), free_misc(data), 1);
+			return (free_cmd(data), free_env(data), free_misc(data), 1);
 	}
 	else
 	{
@@ -33,38 +30,22 @@ int	openfiles(int argc, char **argv, t_list *data)
 		data->fd2 = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	}
 	if (data->fd2 == -1)
-		return(free_cmd(data), free_env(data), free_misc(data), 1);
+		return (free_cmd(data), free_env(data), free_misc(data), 1);
 	return (0);
 }
 
-void	execprg(t_list *data, int i, char **envp)
+int	execprg(t_list *data, int i, char **envp)
 {
 	execprghelper(data, i);
 	execve(data->cmdpaths[i], data->commands[i], envp);
 	if (data->cmdpaths[i])
 	{
 		if (!access(data->cmdpaths[i], X_OK))
-		{
-		perror("File not executable");
-		free_cmd(data);
-		free_env(data);
-		free_misc(data);
-		exit(1);
-		}
-		perror("pipex: command is found but is not executable");
-		free_cmd(data);
-		free_env(data);
-		free_misc(data);
-		exit (1);
+			return (perror("File not executable"), cleanup(data), exit(1), 1);
+		return (perror("found but not executable"), cleanup(data), exit(1), 1);
 	}
 	else
-	{
-		perror("pipex: command not found");
-		free_cmd(data);
-		free_env(data);
-		free_misc(data);
-		exit (1);
-	}
+		return (perror("command not found"), cleanup(data), exit(1), 1);
 }
 
 void	usage_check(int argc, char **argv, char **envp, t_list *data)
@@ -93,7 +74,7 @@ void	usage_check(int argc, char **argv, char **envp, t_list *data)
 	}
 }
 
-void	createpipes(t_list *data)
+int	createpipes(t_list *data)
 {
 	int	i;
 
@@ -102,28 +83,15 @@ void	createpipes(t_list *data)
 	{
 		data->fdpipe[i] = malloc(sizeof (int) * 2);
 		if (!data->fdpipe[i])
-		{
-		free_cmd(data);
-		free_env(data);
-		free_misc(data);
-		exit (1);
-		}
+			return (perror("fd error"), cleanup(data), exit(1), 1);
 		if (pipe(data->fdpipe[i]) == -1)
-		{
-			free_cmd(data);
-			free_env(data);
-			free_misc(data);
-			exit(1);
-		}
+			return (perror("no pipe"), cleanup(data), exit(1), 1);
 		i++;
 	}
 	data->pid = malloc(sizeof (pid_t) * (data->nbcomm));
 	if (!data->pid)
-	{
-		free_cmd(data);
-		free_env(data);
-		exit(1);
-	}
+		return (perror("no pids"), free_cmd(data), free_env(data), exit(1), 1);
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -132,7 +100,6 @@ int	main(int argc, char **argv, char **envp)
 	int		i;
 
 	i = 0;
-	atexit(f);
 	usage_check(argc, argv, envp, &data);
 	openfiles(argc, argv, &data);
 	createpipes(&data);
@@ -141,8 +108,7 @@ int	main(int argc, char **argv, char **envp)
 		data.pid[i] = fork();
 		if (data.pid[i] == -1)
 		{
-			perror("No child :/");
-			return(free_cmd(&data), free_env(&data), free_misc(&data), 1);
+			return (perror("No child :/"), cleanup(&data), exit(1), 1);
 		}
 		if (data.pid[i] == 0)
 			execprg(&data, i, envp);
@@ -150,14 +116,9 @@ int	main(int argc, char **argv, char **envp)
 			parent_close(&data, i);
 		i++;
 	}
-	while (i > 0)
-	{
-		i--;
+	while (i--)
 		waitpid(data.pid[i], NULL, 0);
-	}
 	unlink(".tmp.txt");
-	free_cmd(&data);
-	free_env(&data);
-	free_misc(&data);
+	cleanup(&data);
 	return (0);
 }
