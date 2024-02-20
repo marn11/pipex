@@ -20,9 +20,11 @@ void	firstcmd(t_list *data, char **envp)
 		perror("Where is the first command?");
 		exit(EXIT_FAILURE);
 	}
-	dup2(data->fd1, 0);
+	if (dup2(data->fd1, 0) == -1)
+		return (perror("no dup"), close(data->fd1), exit(1));
 	close(data->fd1);
-	dup2(data->fd[1], 1);
+	if (dup2(data->fd[1], 1) == -1)
+		return (perror("no dup"), close(data->fd[1]), exit(1));
 	close(data->fd[0]);
 	close(data->fd[1]);
 	if (execve(data->cmd1path, data->cmd1, envp) == -1)
@@ -41,9 +43,11 @@ void	secondcmd(t_list *data, char **envp)
 		perror("Where is the second command?");
 		exit(EXIT_FAILURE);
 	}
-	dup2(data->fd2, 1);
+	if (dup2(data->fd2, 1) == -1)
+		return (perror("no dup"), close(data->fd2), exit(1));
 	close(data->fd2);
-	dup2(data->fd[0], 0);
+	if (dup2(data->fd[0], 0) == -1)
+		return (perror("no dup"), close(data->fd[0]), exit(1));
 	close(data->fd[1]);
 	close(data->fd[0]);
 	if (execve(data->cmd2path, data->cmd2, envp) == -1)

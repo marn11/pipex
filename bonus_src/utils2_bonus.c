@@ -75,8 +75,10 @@ void	execprghelper(t_list *data, int i)
 	{
 		close(data->fdpipe[i - 1][1]);
 		close(data->fdpipe[i][0]);
-		dup2(data->fdpipe[i - 1][0], 0);
-		dup2(data->fdpipe[i][1], 1);
+		if (dup2(data->fdpipe[i - 1][0], 0) == -1)
+			return (perror("no dup"), close(data->fdpipe[i - 1][0]), exit(1));
+		if (dup2(data->fdpipe[i][1], 1) == -1)
+			return (perror("no dup"), close(data->fdpipe[i][1]), exit(1));
 	}
 	close(data->fd1);
 	close(data->fd2);
@@ -90,11 +92,9 @@ void	execprghelper(t_list *data, int i)
 
 int	parsing(t_list *data, char **argv, char **envp)
 {
-	int		i;
 	int		parameters;
 	char	*env_path;
 
-	i = 0;
 	env_path = find_envp(envp);
 	if (!env_path)
 		return (perror("Error in finding the PATH"), exit(1), 1);

@@ -56,15 +56,19 @@ int	ft_data(t_list *data)
 void	firstcmd(t_list *data, int i)
 {
 	close(data->fdpipe[i][0]);
-	dup2(data->fd1, 0);
-	dup2(data->fdpipe[i][1], 1);
+	if (dup2(data->fd1, 0) == -1)
+		return (perror("no dup"), close(data->fd1), exit(1));
+	if (dup2(data->fdpipe[i][1], 1) == -1)
+		return (perror("no dup"), close(data->fdpipe[i][1]), exit(1));
 }
 
 void	lastcmd(t_list *data, int i)
 {
 	close (data->fdpipe[i - 1][1]);
-	dup2(data->fdpipe[i - 1][0], 0);
-	dup2(data->fd2, 1);
+	if (dup2(data->fdpipe[i - 1][0], 0) == -1)
+		return (perror("no dup"), close(data->fdpipe[i - 1][0]), exit(1));
+	if (dup2(data->fd2, 1) == -1)
+		return (perror("no dup"), close(data->fd2), exit(1));
 }
 
 void	cleanup(t_list *data)
