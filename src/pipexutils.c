@@ -36,6 +36,8 @@ char	*get_cmd_path(t_list *data, char *cmd)
 	int		i;
 
 	i = 0;
+	if (!cmd)
+		return (NULL);
 	if (cmd[0] == '/' || cmd[0] == '.')
 		return (ft_strdup(cmd));
 	while (data->path[i])
