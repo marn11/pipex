@@ -51,7 +51,6 @@ int		check_files(char *input, char *output);
 void	execprghelper(t_list *data, int i);
 int		parsing(t_list *data, char **argv, char **envp);
 void	parent_close(t_list *data, int i);
-int		ft_data(t_list *data);
 void	firstcmd(t_list *data, int i);
 void	lastcmd(t_list *data, int i);
 void	free_misc(t_list *data);
