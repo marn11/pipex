@@ -107,9 +107,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data.pid[i] = fork();
 		if (data.pid[i] == -1)
-		{
 			return (perror("No child :/"), cleanup(&data), exit(1), 1);
-		}
 		if (data.pid[i] == 0)
 			execprg(&data, i, envp);
 		else
